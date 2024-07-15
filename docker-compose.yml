@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  user-service:
+    build: ./user-service
+    ports:
+      - "5001:5001"
+  news-aggregation-service:
+    build: ./news-aggregation-service
+    ports:
+      - "5002:5002"
+  email-service:
+    build: ./email-service
+    ports:
+      - "5004:5004"
+  ai-service:
+    build: ./ai-service
+    ports:
+      - "5003:5003"
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "5000:5000"
+  ui:
+    build: ./ui
+    ports:
+      - "3000:3000"
