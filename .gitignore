@@ -1,0 +1,9 @@
+# Docker
+docker-compose.override.yml
+.docker/
+
+# Environments
+.env
+
+# Node.js
+node_modules/
