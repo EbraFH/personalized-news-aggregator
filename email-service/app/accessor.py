@@ -1,18 +1,22 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
 
 class EmailAccessor:
     """
     Accessor class for sending emails using an SMTP server.
     """
 
-    def send_email(self, email, summary):
+    @staticmethod
+    def send_email(email, summary):
         """
         Send an email with the given summary.
         """
-        sender_email = "your_email@example.com"
-        sender_password = "your_password"
+        sender_email = os.getenv('EMAIL_USERNAME')
+        sender_password = os.getenv('EMAIL_PASSWORD')
+        email_host = os.getenv('EMAIL_HOST')
+        email_port = os.getenv('EMAIL_PORT')
         subject = "Your News Summary"
         body = f"Here is your news summary:\n\n{summary}"
 
@@ -23,7 +27,7 @@ class EmailAccessor:
         msg.attach(MIMEText(body, 'plain'))
 
         try:
-            with smtplib.SMTP('smtp.example.com', 587) as server:
+            with smtplib.SMTP(email_host, int(email_port)) as server:
                 server.starttls()
                 server.login(sender_email, sender_password)
                 server.sendmail(sender_email, email, msg.as_string())

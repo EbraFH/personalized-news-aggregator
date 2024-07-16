@@ -1,15 +1,14 @@
-from app.accessor import NewsAccessor
+from app.accessor import NewsAccessor, TextSummarizer
 
 class NewsEngine:
     """
-    Engine class for news business logic.
+    Engine class to encapsulate business logic for news aggregation and summarization.
     """
-
-    def __init__(self):
-        self.news_accessor = NewsAccessor()
-
-    def aggregate_news(self, preferences):
+    @staticmethod
+    def get_summarized_news(preferences):
         """
-        Aggregate news based on user preferences.
+        Fetch and summarize news based on preferences.
         """
-        return self.news_accessor.fetch_news(preferences)
+        news = NewsAccessor.fetch_news(preferences)
+        summaries = [TextSummarizer.summarize_text(article['description']) for article in news['results']]
+        return summaries

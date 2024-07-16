@@ -12,4 +12,4 @@ class NewsManager:
         """
         Aggregate news based on user preferences.
         """
-        return self.news_engine.aggregate_news(preferences)
+        return self.news_engine.get_summarized_news(preferences)

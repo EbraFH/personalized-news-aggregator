@@ -2,14 +2,11 @@ from app.accessor import EmailAccessor
 
 class EmailEngine:
     """
-    Engine class for handling the core logic of sending emails.
+    Engine class to encapsulate business logic for email sending operations.
     """
-
-    def __init__(self):
-        self.email_accessor = EmailAccessor()
-
-    def send_email(self, email, summary):
+    @staticmethod
+    def send_email(email, summary):
         """
-        Send an email with the given summary using the accessor.
+        Send an email using the accessor class.
         """
-        self.email_accessor.send_email(email, summary)
+        EmailAccessor.send_email(email, summary)
