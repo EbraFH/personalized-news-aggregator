@@ -121,7 +121,7 @@ services:
       - api-gateway
     networks:
       - app-network
-    command: ["dapr", "run", "--app-id", "ui", "--app-port", "3000", "--dapr-http-port", "3505", "--", "npm", "start"]
+    command: ["npm", "start"]
 
   # Dapr placement service
   dapr-placement:

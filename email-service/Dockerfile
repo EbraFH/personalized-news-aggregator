@@ -7,4 +7,8 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python", "app/__init__.py"]
+# Install Dapr CLI
+RUN apt-get update && apt-get install -y wget
+RUN wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O install.sh && chmod +x install.sh && ./install.sh
+
+CMD ["dapr", "run", "--app-id", "email-service", "--app-port", "5003", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
