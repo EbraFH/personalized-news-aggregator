@@ -14,7 +14,6 @@ function Register() {
         body: JSON.stringify({ email, preferences: preferences.split(",") }),
       });
       if (response.ok) {
-        const data = await response.json();
         // Redirect to login page after successful registration
         window.location.href = "/login";
       } else {

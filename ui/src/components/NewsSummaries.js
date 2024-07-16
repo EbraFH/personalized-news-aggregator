@@ -16,7 +16,7 @@ function NewsSummaries() {
         });
         if (response.ok) {
           const data = await response.json();
-          setSummaries(data.summaries);
+          setSummaries(data.news_summary);
         } else {
           console.error("Failed to fetch news summaries");
         }
