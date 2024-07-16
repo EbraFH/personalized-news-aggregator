@@ -21,7 +21,7 @@ class GatewayAccessor:
         """
         Fetch and summarize news based on user preferences by calling the news aggregation service and AI service.
         """
-        news_url = "http://news-aggregation-service:5002/api/fetch_news"
+        news_url = "http://news-aggregation-service:5002/api/news"
         ai_url = "http://ai-service:5003/api/generate_summary"
         email_url = "http://email-service:5004/api/send_email"
 
