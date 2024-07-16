@@ -15,7 +15,6 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("email", email);
-        // Redirect to preferences page after successful login
         window.location.href = "/preferences";
       } else {
         console.error("Login failed");

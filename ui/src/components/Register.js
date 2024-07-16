@@ -15,8 +15,6 @@ function Register() {
       });
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("email", email);
-        // Redirect to login page after successful registration
         window.location.href = "/login";
       } else {
         console.error("Registration failed");
