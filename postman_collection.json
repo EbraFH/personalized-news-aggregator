@@ -20,10 +20,10 @@
           "raw": "{\n    \"email\": \"test@example.com\",\n    \"preferences\": \"technology,science\"\n}"
         },
         "url": {
-          "raw": "http://localhost:5004/api/register",
+          "raw": "http://localhost:5000/api/register",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "5004",
+          "port": "5000",
           "path": ["api", "register"]
         }
       },
@@ -44,10 +44,10 @@
           "raw": "{\n    \"email\": \"test@example.com\"\n}"
         },
         "url": {
-          "raw": "http://localhost:5004/api/login",
+          "raw": "http://localhost:5000/api/login",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "5004",
+          "port": "5000",
           "path": ["api", "login"]
         }
       },
@@ -68,10 +68,10 @@
           "raw": "{\n    \"email\": \"test@example.com\",\n    \"preferences\": \"technology,science\"\n}"
         },
         "url": {
-          "raw": "http://localhost:5004/api/preferences",
+          "raw": "http://localhost:5000/api/preferences",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "5004",
+          "port": "5000",
           "path": ["api", "preferences"]
         }
       },
@@ -92,10 +92,10 @@
           "raw": "{\n    \"email\": \"test@example.com\"\n}"
         },
         "url": {
-          "raw": "http://localhost:5004/api/news",
+          "raw": "http://localhost:5000/api/news",
           "protocol": "http",
           "host": ["localhost"],
-          "port": "5004",
+          "port": "5000",
           "path": ["api", "news"]
         }
       },
