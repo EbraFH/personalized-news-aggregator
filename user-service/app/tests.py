@@ -28,14 +28,14 @@ class UserServiceTests(unittest.TestCase):
         """
         Test user registration.
         """
-        response = self.app.post('/api/register', json={'email': 'test@example.com'})
+        response = self.app.post('/api/register', json={'email': 'test@example.com', 'preferences': 'technology'})
         self.assertEqual(response.status_code, 201)
 
     def test_login_user(self):
         """
         Test user login.
         """
-        self.app.post('/api/register', json={'email': 'test@example.com'})
+        self.app.post('/api/register', json={'email': 'test@example.com', 'preferences': 'technology'})
         response = self.app.post('/api/login', json={'email': 'test@example.com'})
         self.assertEqual(response.status_code, 200)
 
