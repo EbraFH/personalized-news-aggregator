@@ -1,26 +1,114 @@
-version: '3.7'
+
 services:
+  # User Service
   user-service:
-    build: ./user-service
-    ports:
-      - "5001:5001"
-  news-aggregation-service:
-    build: ./news-aggregation-service
-    ports:
-      - "5002:5002"
-  email-service:
-    build: ./email-service
-    ports:
-      - "5004:5004"
-  ai-service:
-    build: ./ai-service
-    ports:
-      - "5003:5003"
-  api-gateway:
-    build: ./api-gateway
+    build:
+      context: ./user-service
     ports:
       - "5000:5000"
+    environment:
+      - FLASK_APP=app
+      - FLASK_ENV=development
+      - SQLALCHEMY_DATABASE_URI=sqlite:///users.db
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USERNAME=${EMAIL_USERNAME}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+    volumes:
+      - ./user-service:/app
+    depends_on:
+      - dapr-placement
+    networks:
+      - app-network
+    command: ["dapr", "run", "--app-id", "user-service", "--app-port", "5000", "--dapr-http-port", "3500", "--components-path", "/components", "python", "app/__init__.py"]
+
+  # News Aggregation Service
+  news-aggregation-service:
+    build:
+      context: ./news-aggregation-service
+    ports:
+      - "5001:5001"
+    environment:
+      - NEWS_API_KEY=${NEWS_API_KEY}
+    volumes:
+      - ./news-aggregation-service:/app
+    depends_on:
+      - dapr-placement
+    networks:
+      - app-network
+    command: ["dapr", "run", "--app-id", "news-aggregation-service", "--app-port", "5001", "--dapr-http-port", "3501", "--components-path", "/components", "python", "app/__init__.py"]
+
+  # Email Service
+  email-service:
+    build:
+      context: ./email-service
+    ports:
+      - "5002:5002"
+    environment:
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USERNAME=${EMAIL_USERNAME}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+    volumes:
+      - ./email-service:/app
+    depends_on:
+      - dapr-placement
+    networks:
+      - app-network
+    command: ["dapr", "run", "--app-id", "email-service", "--app-port", "5002", "--dapr-http-port", "3502", "--components-path", "/components", "python", "app/__init__.py"]
+
+  # AI Service
+  ai-service:
+    build:
+      context: ./ai-service
+    ports:
+      - "5003:5003"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - ./ai-service:/app
+    depends_on:
+      - dapr-placement
+    networks:
+      - app-network
+    command: ["dapr", "run", "--app-id", "ai-service", "--app-port", "5003", "--dapr-http-port", "3503", "--components-path", "/components", "python", "app/__init__.py"]
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./api-gateway
+    ports:
+      - "5004:5004"
+    volumes:
+      - ./api-gateway:/app
+    depends_on:
+      - dapr-placement
+      - user-service
+      - news-aggregation-service
+      - email-service
+      - ai-service
+    networks:
+      - app-network
+    command: ["dapr", "run", "--app-id", "api-gateway", "--app-port", "5004", "--dapr-http-port", "3504", "--components-path", "/components", "python", "app/__init__.py"]
+
+  # UI
   ui:
-    build: ./ui
+    build:
+      context: ./ui
     ports:
       - "3000:3000"
+    networks:
+      - app-network
+
+  # Dapr placement service
+  dapr-placement:
+    image: "daprio/dapr:latest"
+    ports:
+      - "6050:6050"
+    command: ["./placement", "-port", "6050"]
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
