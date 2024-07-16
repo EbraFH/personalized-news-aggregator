@@ -2,7 +2,6 @@ from flask import request, jsonify
 from app import app
 from app.manager import UserManager
 import requests
-import os
 
 @app.route('/api/register', methods=['POST'])
 def register_user():
@@ -18,6 +17,11 @@ def register_user():
         
         user_manager = UserManager()
         user = user_manager.create_user(email, preferences)
+        
+        # Publish an event to the pub/sub component
+        pubsub_url = "http://localhost:3500/v1.0/publish/pubsub/user-registered"
+        event_data = {"email": email, "preferences": preferences}
+        requests.post(pubsub_url, json=event_data)
         
         return jsonify({"message": "User registered successfully", "user_id": user.id}), 201
     except Exception as e:
