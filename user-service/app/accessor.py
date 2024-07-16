@@ -20,3 +20,15 @@ class UserAccessor:
         Get a user by email.
         """
         return User.query.filter_by(email=email).first()
+
+    def update_preferences(self, email, preferences):
+        """
+        Update user preferences.
+        """
+        user = self.get_user_by_email(email)
+        if user:
+            user.preferences = preferences
+            db.session.commit()
+            return user
+        else:
+            raise ValueError("User not found")

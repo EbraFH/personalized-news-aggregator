@@ -52,34 +52,16 @@ def save_preferences():
     """
     Save user preferences.
     """
-    data = request.get_json()
     try:
-        preferences = UserManager.save_preferences(data)
-        return jsonify(preferences), 200
+        data = request.get_json()
+        email = data.get('email')
+        preferences = data.get('preferences')
+        if not email or not preferences:
+            raise ValueError("Email and preferences are required")
+        
+        user_manager = UserManager()
+        user = user_manager.update_preferences(email, preferences)
+        
+        return jsonify({"message": "Preferences updated successfully", "user_id": user.id}), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/api/news-summaries', methods=['GET'])
-def get_news_summaries():
-    """
-    Fetch news summaries based on user preferences.
-    """
-    try:
-        summaries = UserManager.get_news_summaries()
-        return jsonify(summaries), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    
-@app.route('/api/preferences', methods=['PUT'])
-def update_preferences():
-    """
-    Update user preferences.
-    """
-    data = request.get_json()
-    email = data.get('email')
-    preferences = data.get('preferences')
-    try:
-        user = UserManager.update_preferences(email, preferences)
-        return jsonify({'message': 'Preferences updated successfully!'}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400 
+        return jsonify({"error": str(e)}), 400

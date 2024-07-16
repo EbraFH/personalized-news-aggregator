@@ -19,3 +19,9 @@ class UserEngine:
         Get a user by email.
         """
         return self.user_accessor.get_user_by_email(email)
+
+    def update_preferences(self, email, preferences):
+        """
+        Update user preferences.
+        """
+        return self.user_accessor.update_preferences(email, preferences)

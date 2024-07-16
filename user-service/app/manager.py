@@ -19,3 +19,9 @@ class UserManager:
         Get a user by email.
         """
         return self.user_engine.get_user_by_email(email)
+
+    def update_preferences(self, email, preferences):
+        """
+        Update user preferences.
+        """
+        return self.user_engine.update_preferences(email, preferences)
