@@ -14,6 +14,7 @@ function Preferences() {
         body: JSON.stringify({ email, preferences: preferences.split(",") }),
       });
       if (response.ok) {
+        const data = await response.json();
         // Redirect to news summaries page after saving preferences
         window.location.href = "/news";
       } else {

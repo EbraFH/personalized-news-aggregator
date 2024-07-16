@@ -1,235 +1,105 @@
 {
   "info": {
     "name": "Personalized News Update Aggregator",
-    "_postman_id": "d2e8c0c4-9b6a-4e1b-83be-fb1a5ed9ef27",
-    "description": "Postman collection for the Personalized News Update Aggregator project.",
+    "description": "API collection for the Personalized News Update Aggregator project",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "User Service",
-      "item": [
-        {
-          "name": "Register User",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"test@example.com\",\n  \"preferences\": [\"technology\", \"science\"]\n}"
-            },
-            "url": {
-              "raw": "http://localhost:5000/api/register",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "register"]
-            }
-          },
-          "response": []
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"test@example.com\",\n    \"preferences\": \"technology,science\"\n}"
         },
-        {
-          "name": "Login User",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"test@example.com\"\n}"
-            },
-            "url": {
-              "raw": "http://localhost:5000/api/login",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "login"]
-            }
-          },
-          "response": []
+        "url": {
+          "raw": "http://localhost:5004/api/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5004",
+          "path": ["api", "register"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"test@example.com\"\n}"
         },
-        {
-          "name": "Save Preferences",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"test@example.com\",\n  \"preferences\": [\"technology\", \"science\"]\n}"
-            },
-            "url": {
-              "raw": "http://localhost:5000/api/preferences",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "preferences"]
-            }
-          },
-          "response": []
+        "url": {
+          "raw": "http://localhost:5004/api/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5004",
+          "path": ["api", "login"]
         }
-      ]
+      },
+      "response": []
     },
     {
-      "name": "News Aggregation Service",
-      "item": [
-        {
-          "name": "Fetch News",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"test@example.com\"\n}"
-            },
-            "url": {
-              "raw": "http://localhost:5001/api/news",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5001",
-              "path": ["api", "news"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Email Service",
-      "item": [
-        {
-          "name": "Send Email",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"test@example.com\",\n  \"summary\": \"This is a test summary.\"\n}"
-            },
-            "url": {
-              "raw": "http://localhost:5002/api/send_email",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5002",
-              "path": ["api", "send_email"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "AI Service",
-      "item": [
-        {
-          "name": "Generate Summary",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"articles\": [\n    {\"title\": \"Article 1\", \"content\": \"This is the content of article 1.\"},\n    {\"title\": \"Article 2\", \"content\": \"This is the content of article 2.\"}\n  ]\n}"
-            },
-            "url": {
-              "raw": "http://localhost:5003/api/generate_summary",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5003",
-              "path": ["api", "generate_summary"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "API Gateway",
-      "item": [
-        {
-          "name": "Register User",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"test@example.com\",\n  \"preferences\": [\"technology\", \"science\"]\n}"
-            },
-            "url": {
-              "raw": "http://localhost:5000/api/register",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "register"]
-            }
-          },
-          "response": []
+      "name": "Save Preferences",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"test@example.com\",\n    \"preferences\": \"technology,science\"\n}"
         },
-        {
-          "name": "Fetch and Summarize News",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"test@example.com\"\n}"
-            },
-            "url": {
-              "raw": "http://localhost:5000/api/news",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "news"]
-            }
-          },
-          "response": []
+        "url": {
+          "raw": "http://localhost:5004/api/preferences",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5004",
+          "path": ["api", "preferences"]
         }
-      ]
+      },
+      "response": []
+    },
+    {
+      "name": "Fetch News Summaries",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"test@example.com\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5004/api/news",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5004",
+          "path": ["api", "news"]
+        }
+      },
+      "response": []
     }
   ]
 }

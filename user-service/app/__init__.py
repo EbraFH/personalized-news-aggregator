@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from dotenv import load_dotenv
 import logging
+import requests
 
 # Load environment variables from .env file
 load_dotenv()
@@ -24,4 +25,4 @@ logging.basicConfig(level=logging.INFO)
 import app.views
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=5000)

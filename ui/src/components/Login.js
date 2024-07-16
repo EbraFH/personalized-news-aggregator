@@ -14,8 +14,8 @@ function Login() {
       });
       if (response.ok) {
         const data = await response.json();
-        // Save email to local storage and redirect to preferences page
         localStorage.setItem("email", email);
+        // Redirect to preferences page after successful login
         window.location.href = "/preferences";
       } else {
         console.error("Login failed");
