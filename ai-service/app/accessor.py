@@ -1,26 +1,19 @@
-import requests
-import os
+from transformers import pipeline
 
 class AIAccessor:
     """
     Accessor class for interacting with the external AI API to generate summaries.
     """
 
-    @staticmethod
-    def generate_summary(articles):
+    def __init__(self):
+        self.summarizer = pipeline("summarization")
+
+    def generate_summary(self, articles):
         """
-        Generate a summary for the given news articles using the Gemini Free Tier API.
+        Generate a summary for the given news articles using Hugging Face API.
         """
         try:
-            api_key = os.getenv('GEMINI_API_KEY')
-            url = 'https://api.gemini.com/v1/ai/summarize'
-            headers = {
-                'Authorization': f'Bearer {api_key}',
-                'Content-Type': 'application/json'
-            }
-            data = {'articles': articles}
-            response = requests.post(url, json=data, headers=headers)
-            response.raise_for_status()
-            return response.json().get("summary")
+            summaries = self.summarizer(articles, max_length=130, min_length=30, do_sample=False)
+            return [summary['summary_text'] for summary in summaries]
         except Exception as e:
             raise Exception(f"Failed to generate summary: {str(e)}")

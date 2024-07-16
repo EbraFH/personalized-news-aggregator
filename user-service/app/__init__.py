@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 import logging
 
@@ -12,10 +13,14 @@ load_dotenv()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 db = SQLAlchemy(app)
 
-# Enable CORS for all routes
+# This will enable CORS for all routes
 CORS(app)
+
+# Configure JWT
+jwt = JWTManager(app)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,4 +29,4 @@ logging.basicConfig(level=logging.INFO)
 import app.views
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=5000)

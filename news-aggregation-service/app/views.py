@@ -1,7 +1,7 @@
+import requests
 from flask import request, jsonify
 from app import app
 from app.manager import NewsManager
-import requests
 
 @app.route('/api/news', methods=['POST'])
 def get_news():

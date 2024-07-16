@@ -5,11 +5,13 @@ function Preferences() {
 
   const handleSavePreferences = async () => {
     try {
+      const token = localStorage.getItem("token");
       const email = localStorage.getItem("email");
       const response = await fetch("http://localhost:5000/api/preferences", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ email, preferences: preferences.split(",") }),
       });

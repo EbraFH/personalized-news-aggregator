@@ -1,7 +1,7 @@
+import requests
 from flask import request, jsonify
 from app import app
 from app.manager import AIManager
-import requests
 
 @app.route('/api/generate_summary', methods=['POST'])
 def generate_summary():

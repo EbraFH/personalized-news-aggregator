@@ -13,6 +13,10 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "x-access-token",
+            "value": "my_secure_token"
           }
         ],
         "body": {
@@ -37,6 +41,10 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "x-access-token",
+            "value": "my_secure_token"
           }
         ],
         "body": {
@@ -61,6 +69,10 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "x-access-token",
+            "value": "my_secure_token"
           }
         ],
         "body": {
@@ -85,6 +97,10 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "x-access-token",
+            "value": "my_secure_token"
           }
         ],
         "body": {
