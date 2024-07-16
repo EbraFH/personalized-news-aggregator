@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Preferences from "./components.Preferences";
-import NewsSummaries from "./components.NewsSummaries";
+import Preferences from "./components/Preferences";
+import NewsSummaries from "./components/NewsSummaries";
 
 function App() {
   return (
