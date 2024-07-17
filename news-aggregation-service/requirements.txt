@@ -1,5 +1,5 @@
-Flask==2.0.1
-requests==2.25.1
-Flask-CORS==3.0.10
-python-dotenv==0.15.0
-redis==3.5.3
+Flask
+requests
+Flask-CORS
+python-dotenv
+redis
