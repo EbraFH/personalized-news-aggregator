@@ -22,7 +22,16 @@ class AIServiceTest(unittest.TestCase):
             success = True
         except Exception:
             success = False
+            summary = []
+        
+        # Check that summary was successfully generated
         self.assertTrue(success)
+        # Check that summary is not empty
+        self.assertIsInstance(summary, list)
+        self.assertGreater(len(summary), 0)
+        # Check that the summary contains strings
+        for item in summary:
+            self.assertIsInstance(item, str)
 
 if __name__ == '__main__':
     unittest.main()

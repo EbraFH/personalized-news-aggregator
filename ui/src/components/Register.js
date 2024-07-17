@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import "./styles/Register.css";
 
 function Register() {
   const [email, setEmail] = useState("");
   const [preferences, setPreferences] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleRegister = async () => {
     try {
@@ -15,17 +17,19 @@ function Register() {
       });
       if (response.ok) {
         const data = await response.json();
+        setMessage(`Registration successful! User ID: ${data.user_id}`);
         window.location.href = "/login";
       } else {
-        console.error("Registration failed");
+        const errorData = await response.json();
+        setMessage(`Registration failed: ${errorData.error}`);
       }
     } catch (error) {
-      console.error("Error:", error);
+      setMessage(`Error: ${error.message}`);
     }
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Register</h2>
       <input
         type="email"
@@ -40,6 +44,7 @@ function Register() {
         onChange={(e) => setPreferences(e.target.value)}
       />
       <button onClick={handleRegister}>Register</button>
+      {message && <p>{message}</p>}
     </div>
   );
 }

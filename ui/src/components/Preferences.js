@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./styles/Preferences.css";
 
 function Preferences() {
   const [preferences, setPreferences] = useState("");
@@ -26,7 +27,7 @@ function Preferences() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Set Preferences</h2>
       <input
         type="text"

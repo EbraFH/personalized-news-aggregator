@@ -20,7 +20,13 @@ class APIGatewayTest(unittest.TestCase):
             success = True
         except Exception:
             success = False
+            response = None
+        
         self.assertTrue(success)
+        self.assertIsNotNone(response)
+        self.assertIsInstance(response, dict)
+        self.assertIn("message", response)
+        self.assertEqual(response["message"], "User registered successfully")
 
     def test_fetch_and_summarize_news(self):
         """
@@ -32,7 +38,13 @@ class APIGatewayTest(unittest.TestCase):
             success = True
         except Exception:
             success = False
+            response = None
+        
         self.assertTrue(success)
+        self.assertIsNotNone(response)
+        self.assertIsInstance(response, dict)
+        self.assertIn("status", response)
+        self.assertEqual(response["status"], "News summary sent")
 
 if __name__ == '__main__':
     unittest.main()

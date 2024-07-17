@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./styles/NewsSummaries.css";
 
 function NewsSummaries() {
   const [summaries, setSummaries] = useState([]);
@@ -29,7 +30,7 @@ function NewsSummaries() {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h2>News Summaries</h2>
       <ul>
         {summaries.map((summary, index) => (
