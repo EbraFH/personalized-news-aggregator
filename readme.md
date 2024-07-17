@@ -44,7 +44,7 @@ The system aims to provide users with personalized news updates, ensuring that t
     The Email Service sends the summarized news to users via email.
     The UI displays the news summaries to users.
 
-### Diagram:
+ Diagram:
 +---------------------------+                +----------------------------+
 |          User             |                |         API Gateway        |
 |   Interface (UI)          |<-------------->|                            |
@@ -78,8 +78,7 @@ The system aims to provide users with personalized news updates, ensuring that t
                                                +--------------------------+
 
 
-
-## Project Structure
+ Project Structure
 
 personalized-news-aggregator/
 │
