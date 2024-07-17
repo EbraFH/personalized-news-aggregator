@@ -33,3 +33,25 @@ class NewsAccessor:
             return news
         else:
             response.raise_for_status()
+
+class TextSummarizer:
+    """
+    Summarizer class to generate concise summaries using Gemini Free Tier API.
+    """
+    @staticmethod
+    def summarize_text(text):
+        """
+        Generate a concise summary using Gemini Free Tier API.
+        """
+        api_key = os.getenv('GEMINI_API_KEY')
+        url = 'https://api.gemini.com/v1/ai/summarize'
+        headers = {
+            'Authorization': f'Bearer {api_key}',
+            'Content-Type': 'application/json'
+        }
+        data = {'text': text}
+        response = requests.post(url, json=data, headers=headers)
+        if response.status_code == 200:
+            return response.json()['summary']
+        else:
+            response.raise_for_status()

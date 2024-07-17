@@ -1,6 +1,4 @@
-
 #!/bin/bash
-
 
 # Ensure the Dapr binaries are in place
 mkdir -p /root/.dapr/bin

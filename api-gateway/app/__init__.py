@@ -1,19 +1,20 @@
 from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
-import logging,os
+import logging, os
 
-#  enhance the API Gateway with authorization and define its role more clearly
+# Enhance the API Gateway with authorization and define its role more clearly
 from flask_jwt_extended import JWTManager
 
-app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
-jwt = JWTManager(app)
 # Load environment variables from .env file
 load_dotenv()
 
 # Initialize the app
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
+
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+jwt = JWTManager(app)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

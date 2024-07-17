@@ -9,6 +9,6 @@ class NewsEngine:
         """
         Fetch and summarize news based on preferences.
         """
-        news = NewsAccessor.fetch_news(preferences)
+        news = NewsAccessor().fetch_news(preferences)
         summaries = [TextSummarizer.summarize_text(article['description']) for article in news['results']]
         return summaries
