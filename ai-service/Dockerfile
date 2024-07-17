@@ -7,9 +7,18 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-# Install Dapr CLI
-RUN apt-get update && apt-get install -y wget
-RUN wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O install.sh && chmod +x install.sh && ./install.sh
-ENV PATH="/root/.dapr/bin:$PATH"
+# Install Dapr CLI and Dapr runtime binaries
+RUN apt-get update && apt-get install -y wget curl \
+    && wget -q https://github.com/dapr/cli/releases/download/v1.13.0/dapr_linux_amd64.tar.gz \
+    && tar -xzf dapr_linux_amd64.tar.gz -C /usr/local/bin \
+    && wget -q https://github.com/dapr/dapr/releases/download/v1.13.5/daprd_linux_amd64.tar.gz \
+    && tar -xzf daprd_linux_amd64.tar.gz -C /usr/local/bin
 
-CMD ["dapr", "run", "--app-id", "ai-service", "--app-port", "5004", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
+# Copy the entrypoint script
+COPY entrypoint.sh /app/entrypoint.sh
+
+# Ensure the script is executable
+RUN chmod +x /app/entrypoint.sh
+
+# Set the entrypoint
+ENTRYPOINT ["/app/entrypoint.sh"]

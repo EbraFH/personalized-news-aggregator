@@ -8,7 +8,6 @@ services:
     networks:
       - app-network
 
-  # User Service
   user-service:
     build:
       context: ./user-service
@@ -30,9 +29,8 @@ services:
       - redis
     networks:
       - app-network
-    command: ["dapr", "run", "--app-id", "user-service", "--app-port", "5001", "--dapr-http-port", "3500", "--components-path", "/dapr/components", "--", "python", "app/__init__.py"]
+    command: ["dapr", "run", "--app-id", "user-service", "--app-port", "5001", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
-  # News Aggregation Service
   news-aggregation-service:
     build:
       context: ./news-aggregation-service
@@ -48,9 +46,8 @@ services:
       - redis
     networks:
       - app-network
-    command: ["dapr", "run", "--app-id", "news-aggregation-service", "--app-port", "5002", "--dapr-http-port", "3501", "--components-path", "/dapr/components", "--", "python", "app/__init__.py"]
+    command: ["dapr", "run", "--app-id", "news-aggregation-service", "--app-port", "5002", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
-  # Email Service
   email-service:
     build:
       context: ./email-service
@@ -69,9 +66,8 @@ services:
       - redis
     networks:
       - app-network
-    command: ["dapr", "run", "--app-id", "email-service", "--app-port", "5003", "--dapr-http-port", "3502", "--components-path", "/dapr/components", "--", "python", "app/__init__.py"]
+    command: ["dapr", "run", "--app-id", "email-service", "--app-port", "5003", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
-  # AI Service
   ai-service:
     build:
       context: ./ai-service
@@ -88,9 +84,8 @@ services:
       - redis
     networks:
       - app-network
-    command: ["dapr", "run", "--app-id", "ai-service", "--app-port", "5004", "--dapr-http-port", "3503", "--components-path", "/dapr/components", "--", "python", "app/__init__.py"]
+    command: ["dapr", "run", "--app-id", "ai-service", "--app-port", "5004", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
-  # API Gateway
   api-gateway:
     build:
       context: ./api-gateway
@@ -109,9 +104,8 @@ services:
       - ai-service
     networks:
       - app-network
-    command: ["dapr", "run", "--app-id", "api-gateway", "--app-port", "5000", "--dapr-http-port", "3504", "--components-path", "/dapr/components", "--", "python", "app/__init__.py"]
+    command: ["dapr", "run", "--app-id", "api-gateway", "--app-port", "5000", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
-  # UI
   ui:
     build:
       context: ./ui
@@ -123,7 +117,6 @@ services:
       - app-network
     command: ["npm", "start"]
 
-  # Dapr placement service
   dapr-placement:
     image: "daprio/dapr:latest"
     ports:
