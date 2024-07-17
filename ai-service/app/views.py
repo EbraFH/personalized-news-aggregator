@@ -15,8 +15,8 @@ def generate_summary():
             raise ValueError("Articles are required")
         
         ai_manager = AIManager()
-        summary = ai_manager.generate_summary(articles)
-        
+        summary = ai_manager.generate_summary_with_kernel(articles)
+        # summary = ai_manager.generate_summary(articles)
         # Publish an event to the pub/sub component
         pubsub_url = "http://localhost:3500/v1.0/publish/pubsub/summary-generated"
         event_data = {"articles": articles, "summary": summary}

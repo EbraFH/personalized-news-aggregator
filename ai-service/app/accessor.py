@@ -1,4 +1,5 @@
 from transformers import pipeline
+from semantic_kernel import Kernel
 
 class AIAccessor:
     """
@@ -7,6 +8,7 @@ class AIAccessor:
 
     def __init__(self):
         self.summarizer = pipeline("summarization")
+        self.kernel = Kernel()
 
     def generate_summary(self, articles):
         """
@@ -17,3 +19,13 @@ class AIAccessor:
             return [summary['summary_text'] for summary in summaries]
         except Exception as e:
             raise Exception(f"Failed to generate summary: {str(e)}")
+
+    def generate_summary_with_kernel(self, articles):
+        """
+        Generate a summary for the given news articles using Semantic Kernel.
+        """
+        try:
+            summaries = [self.kernel.summarize(article) for article in articles]
+            return summaries
+        except Exception as e:
+            raise Exception(f"Failed to generate summary with Semantic Kernel: {str(e)}")

@@ -13,10 +13,6 @@
           {
             "key": "Content-Type",
             "value": "application/json"
-          },
-          {
-            "key": "x-access-token",
-            "value": "my_secure_token"
           }
         ],
         "body": {
@@ -41,10 +37,6 @@
           {
             "key": "Content-Type",
             "value": "application/json"
-          },
-          {
-            "key": "x-access-token",
-            "value": "my_secure_token"
           }
         ],
         "body": {
@@ -71,8 +63,8 @@
             "value": "application/json"
           },
           {
-            "key": "x-access-token",
-            "value": "my_secure_token"
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
           }
         ],
         "body": {
@@ -99,8 +91,8 @@
             "value": "application/json"
           },
           {
-            "key": "x-access-token",
-            "value": "my_secure_token"
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
           }
         ],
         "body": {
@@ -113,6 +105,30 @@
           "host": ["localhost"],
           "port": "5000",
           "path": ["api", "news"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Generate Summary with Kernel",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"articles\": [\n        \"Article content 1\",\n        \"Article content 2\"\n    ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5004/api/generate_summary",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5004",
+          "path": ["api", "generate_summary"]
         }
       },
       "response": []

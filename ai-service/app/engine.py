@@ -13,3 +13,9 @@ class AIEngine:
         Generate a summary for the given news articles using the accessor.
         """
         return self.ai_accessor.generate_summary(articles)
+
+    def generate_summary_with_kernel(self, articles):
+        """
+        Generate a summary for the given news articles using Semantic Kernel.
+        """
+        return self.ai_accessor.generate_summary_with_kernel(articles)
