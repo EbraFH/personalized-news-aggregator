@@ -1,41 +1,48 @@
 import React, { useState } from "react";
-import "./styles/Login.css";
+import { useHistory } from "react-router-dom";
+import "../styles/styles.css";
 
 function Login() {
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const history = useHistory();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch("http://localhost:5000/api/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("email", email);
-        window.location.href = "/preferences";
+        history.push("/preferences");
       } else {
-        console.error("Login failed");
+        const errorData = await response.json();
+        setError(errorData.error || "Login failed");
       }
     } catch (error) {
-      console.error("Error:", error);
+      setError("An error occurred. Please try again.");
     }
   };
 
   return (
     <div className="container">
       <h2>Login</h2>
-      <input
-        type="email"
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }

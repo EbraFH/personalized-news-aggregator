@@ -1,50 +1,58 @@
 import React, { useState } from "react";
-import "./styles/Register.css";
+import { useHistory } from "react-router-dom";
+import "../styles/styles.css";
 
 function Register() {
   const [email, setEmail] = useState("");
   const [preferences, setPreferences] = useState("");
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const history = useHistory();
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch("http://localhost:5000/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, preferences: preferences.split(",") }),
+        body: JSON.stringify({
+          email,
+          preferences: preferences.split(",").map((p) => p.trim()),
+        }),
       });
       if (response.ok) {
-        const data = await response.json();
-        setMessage(`Registration successful! User ID: ${data.user_id}`);
-        window.location.href = "/login";
+        history.push("/login");
       } else {
         const errorData = await response.json();
-        setMessage(`Registration failed: ${errorData.error}`);
+        setError(errorData.error || "Registration failed");
       }
     } catch (error) {
-      setMessage(`Error: ${error.message}`);
+      setError("An error occurred. Please try again.");
     }
   };
 
   return (
     <div className="container">
       <h2>Register</h2>
-      <input
-        type="email"
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Enter your preferences (comma separated)"
-        value={preferences}
-        onChange={(e) => setPreferences(e.target.value)}
-      />
-      <button onClick={handleRegister}>Register</button>
-      {message && <p>{message}</p>}
+      <form onSubmit={handleRegister}>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Enter your preferences (comma separated)"
+          value={preferences}
+          onChange={(e) => setPreferences(e.target.value)}
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }

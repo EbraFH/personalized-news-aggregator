@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import "./styles/Preferences.css";
+import { useHistory } from "react-router-dom";
+import "../styles/styles.css";
 
 function Preferences() {
   const [preferences, setPreferences] = useState("");
+  const [error, setError] = useState("");
+  const history = useHistory();
 
-  const handleSavePreferences = async () => {
+  const handleSavePreferences = async (e) => {
+    e.preventDefault();
     try {
       const token = localStorage.getItem("token");
       const email = localStorage.getItem("email");
@@ -14,28 +18,36 @@ function Preferences() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ email, preferences: preferences.split(",") }),
+        body: JSON.stringify({
+          email,
+          preferences: preferences.split(",").map((p) => p.trim()),
+        }),
       });
       if (response.ok) {
-        window.location.href = "/news";
+        history.push("/news");
       } else {
-        console.error("Failed to save preferences");
+        const errorData = await response.json();
+        setError(errorData.error || "Failed to save preferences");
       }
     } catch (error) {
-      console.error("Error:", error);
+      setError("An error occurred. Please try again.");
     }
   };
 
   return (
     <div className="container">
       <h2>Set Preferences</h2>
-      <input
-        type="text"
-        placeholder="Enter your preferences (comma separated)"
-        value={preferences}
-        onChange={(e) => setPreferences(e.target.value)}
-      />
-      <button onClick={handleSavePreferences}>Save Preferences</button>
+      <form onSubmit={handleSavePreferences}>
+        <input
+          type="text"
+          placeholder="Enter your preferences (comma separated)"
+          value={preferences}
+          onChange={(e) => setPreferences(e.target.value)}
+          required
+        />
+        <button type="submit">Save Preferences</button>
+      </form>
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }
