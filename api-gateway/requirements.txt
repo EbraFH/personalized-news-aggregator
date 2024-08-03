@@ -1,7 +1,5 @@
-Flask
-requests
-Flask-CORS
-fastapi
-uvicorn
-flask-jwt-extended
-python-dotenv
+Flask==2.2.3
+requests==2.28.2
+Flask-CORS==3.0.10
+flask-jwt-extended==4.4.4
+python-dotenv==0.21.1

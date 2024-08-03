@@ -1,14 +1,10 @@
 import requests
 
 class GatewayAccessor:
-    """
-    Accessor class for interacting with other services.
-    """
+    """Accessor class for interacting with other services."""
 
     def register_user(self, email, preferences):
-        """
-        Register a new user by calling the user service.
-        """
+        """Register a new user by calling the user service."""
         url = "http://localhost:3500/v1.0/invoke/user-service/method/api/register"
         data = {"email": email, "preferences": preferences}
         
@@ -18,9 +14,7 @@ class GatewayAccessor:
         return response.json()
 
     def fetch_and_summarize_news(self, email):
-        """
-        Fetch and summarize news based on user preferences by calling the news aggregation service and AI service.
-        """
+        """Fetch and summarize news based on user preferences."""
         news_url = "http://localhost:3500/v1.0/invoke/news-aggregation-service/method/api/news"
         ai_url = "http://localhost:3500/v1.0/invoke/ai-service/method/api/generate_summary"
         email_url = "http://localhost:3500/v1.0/invoke/email-service/method/api/send_email"
