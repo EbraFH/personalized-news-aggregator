@@ -1,22 +1,21 @@
+from flask import Blueprint, request, jsonify
 import requests
-from flask import request, jsonify
-from app import app
 from app.manager import AIManager
 
-@app.route('/api/generate_summary', methods=['POST'])
+bp = Blueprint('views', __name__)
+
+@bp.route('/api/generate_summary', methods=['POST'])
 def generate_summary():
-    """
-    Generate a summary for the given news articles.
-    """
+    """Generate a summary for the given news articles."""
     try:
         data = request.get_json()
         articles = data.get('articles')
         if not articles:
-            raise ValueError("Articles are required")
+            return jsonify({"error": "Articles are required"}), 400
         
         ai_manager = AIManager()
         summary = ai_manager.generate_summary_with_kernel(articles)
-        # summary = ai_manager.generate_summary(articles)
+        
         # Publish an event to the pub/sub component
         pubsub_url = "http://localhost:3500/v1.0/publish/pubsub/summary-generated"
         event_data = {"articles": articles, "summary": summary}
@@ -24,4 +23,4 @@ def generate_summary():
         
         return jsonify({"summary": summary}), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"error": str(e)}), 500
