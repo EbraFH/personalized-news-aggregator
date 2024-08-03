@@ -1,6 +1,7 @@
-Flask
-Flask-SQLAlchemy
-Flask-CORS
-python-dotenv
-PyJWT
-Flask-JWT-Extended
+Flask==2.2.3
+Flask-SQLAlchemy==3.0.3
+Flask-CORS==3.0.10
+python-dotenv==0.21.1
+PyJWT==2.6.0
+Flask-JWT-Extended==4.4.4
+requests==2.28.2
