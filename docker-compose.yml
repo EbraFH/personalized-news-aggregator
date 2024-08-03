@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # Redis cache
   redis:
     image: redis:alpine
     ports:
@@ -8,6 +9,7 @@ services:
     networks:
       - app-network
 
+  # User management service
   user-service:
     build:
       context: ./user-service
@@ -31,6 +33,7 @@ services:
       - app-network
     command: ["dapr", "run", "--app-id", "user-service", "--app-port", "5001", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
+  # News aggregation service
   news-aggregation-service:
     build:
       context: ./news-aggregation-service
@@ -48,6 +51,7 @@ services:
       - app-network
     command: ["dapr", "run", "--app-id", "news-aggregation-service", "--app-port", "5002", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
+  # Email service
   email-service:
     build:
       context: ./email-service
@@ -68,6 +72,7 @@ services:
       - app-network
     command: ["dapr", "run", "--app-id", "email-service", "--app-port", "5003", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
+  # AI service for text summarization
   ai-service:
     build:
       context: ./ai-service
@@ -86,6 +91,7 @@ services:
       - app-network
     command: ["dapr", "run", "--app-id", "ai-service", "--app-port", "5004", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
+  # API Gateway
   api-gateway:
     build:
       context: ./api-gateway
@@ -106,6 +112,7 @@ services:
       - app-network
     command: ["dapr", "run", "--app-id", "api-gateway", "--app-port", "5000", "--resources-path", "/dapr/components", "--", "python", "app/__init__.py"]
 
+  # User Interface
   ui:
     build:
       context: ./ui
@@ -117,6 +124,7 @@ services:
       - app-network
     command: ["npm", "start"]
 
+  # Dapr placement service
   dapr-placement:
     image: "daprio/dapr:latest"
     ports:

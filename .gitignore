@@ -4,6 +4,27 @@ docker-compose.yml
 
 # Environments
 .env
+.venv
+env/
+venv/
 
 # Node.js
 node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Database
+*.db
+
+# OS generated files
+.DS_Store
+Thumbs.db

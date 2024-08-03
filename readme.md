@@ -200,6 +200,15 @@ personalized-news-aggregator/
     - Integration tests are included in the Postman collection. To run the integration tests:
     - Import the postman_collection.json file into Postman.
 
+To run integration tests:
+
+1. Ensure all services are running using Docker Compose.
+2. Navigate to the `integration_tests` directory.
+3. Run the integration test script:
+
+```bash
+python run_integration_tests.py
+
 #### Run the collection in Postman to test the API endpoints.
     Technologies Used :
     - Flask
