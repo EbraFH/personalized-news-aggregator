@@ -1,24 +1,19 @@
 import unittest
+from unittest.mock import patch
 from app.manager import EmailManager
 
 class EmailServiceTest(unittest.TestCase):
-    """
-    Unit tests for the email service.
-    """
+    """Unit tests for the email service."""
 
-    def setUp(self):
-        self.email_manager = EmailManager()
-
-    def test_send_email(self):
-        """
-        Test sending an email.
-        """
-        try:
-            self.email_manager.send_email("test@example.com", "This is a test summary.")
-            success = True
-        except Exception:
-            success = False
-        self.assertTrue(success)
+    @patch('app.accessor.EmailAccessor.send_email')
+    def test_send_email(self, mock_send_email):
+        """Test sending an email."""
+        email = "test@example.com"
+        summary = "This is a test summary."
+        
+        EmailManager.send_email(email, summary)
+        
+        mock_send_email.assert_called_once_with(email, summary)
 
 if __name__ == '__main__':
     unittest.main()

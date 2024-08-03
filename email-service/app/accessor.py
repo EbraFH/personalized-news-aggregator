@@ -2,17 +2,14 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
+import logging
 
 class EmailAccessor:
-    """
-    Accessor class for sending emails using an SMTP server.
-    """
+    """Accessor class for sending emails using an SMTP server."""
 
     @staticmethod
     def send_email(email, summary):
-        """
-        Send an email with the given summary.
-        """
+        """Send an email with the given summary."""
         sender_email = os.getenv('EMAIL_USERNAME')
         sender_password = os.getenv('EMAIL_PASSWORD')
         email_host = os.getenv('EMAIL_HOST')
@@ -31,5 +28,7 @@ class EmailAccessor:
                 server.starttls()
                 server.login(sender_email, sender_password)
                 server.sendmail(sender_email, email, msg.as_string())
+            logging.info(f"Email sent successfully to {email}")
         except Exception as e:
-            raise Exception(f"Failed to send email: {str(e)}")
+            logging.error(f"Failed to send email: {str(e)}")
+            raise

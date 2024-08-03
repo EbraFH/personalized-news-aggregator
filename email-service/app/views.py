@@ -1,22 +1,21 @@
-from flask import request, jsonify
-from app import app
+from flask import Blueprint, request, jsonify
 from app.manager import EmailManager
 
-@app.route('/api/send_email', methods=['POST'])
+bp = Blueprint('views', __name__)
+
+@bp.route('/api/send_email', methods=['POST'])
 def send_email():
-    """
-    Send an email with the news summary.
-    """
+    """Send an email with the news summary."""
     try:
         data = request.get_json()
         email = data.get('email')
         summary = data.get('summary', '')
-        if not email:
-            raise ValueError("Email is required")
         
-        email_manager = EmailManager()
-        email_manager.send_email(email, summary)
+        if not email:
+            return jsonify({"error": "Email is required"}), 400
+        
+        EmailManager.send_email(email, summary)
         
         return jsonify({"message": "Email sent successfully"}), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"error": str(e)}), 500
