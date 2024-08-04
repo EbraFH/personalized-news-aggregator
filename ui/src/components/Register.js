@@ -1,34 +1,26 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import "../styles/styles.css";
+import { registerUser } from "../services/api";
+import "./styles/Register.css";  // Import component-specific styles
+
 
 function Register() {
+  // State for email, preferences, and message
   const [email, setEmail] = useState("");
   const [preferences, setPreferences] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const history = useHistory();
 
+  // Handle register form submission
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          preferences: preferences.split(",").map((p) => p.trim()),
-        }),
-      });
-      if (response.ok) {
-        history.push("/login");
-      } else {
-        const errorData = await response.json();
-        setError(errorData.error || "Registration failed");
-      }
+      const data = await registerUser(email, preferences.split(","));
+      setMessage(`Registration successful! User ID: ${data.user_id}`);
+      // Redirect to login page after successful registration
+      setTimeout(() => history.push("/login"), 2000);
     } catch (error) {
-      setError("An error occurred. Please try again.");
+      setMessage(`Registration failed: ${error.message}`);
     }
   };
 
@@ -52,7 +44,11 @@ function Register() {
         />
         <button type="submit">Register</button>
       </form>
-      {error && <p className="error">{error}</p>}
+      {message && (
+        <p className={message.includes("successful") ? "success" : "error"}>
+          {message}
+        </p>
+      )}
     </div>
   );
 }

@@ -17,6 +17,8 @@ def register_user():
         preferences = data.get('preferences', {})
         if not email:
             return jsonify({"error": "Email is required"}), 400
+        if not preferences:
+            return jsonify({"error": "At least one preference is required"}), 400
         
         user = user_manager.create_user(email, preferences)
         
@@ -54,6 +56,9 @@ def save_preferences():
     try:
         current_user = get_jwt_identity()
         preferences = request.get_json().get('preferences', {})
+        if not preferences:
+            return jsonify({"error": "At least one preference is required"}), 400
+        
         user = user_manager.get_user_by_email(current_user)
         user_manager.update_preferences(user.id, preferences)
         

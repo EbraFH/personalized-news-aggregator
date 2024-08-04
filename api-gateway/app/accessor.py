@@ -1,4 +1,5 @@
 import requests
+import logging
 
 class GatewayAccessor:
     """Accessor class for interacting with other services."""
@@ -8,10 +9,13 @@ class GatewayAccessor:
         url = "http://localhost:3500/v1.0/invoke/user-service/method/api/register"
         data = {"email": email, "preferences": preferences}
         
-        response = requests.post(url, json=data)
-        response.raise_for_status()
-        
-        return response.json()
+        try:
+            response = requests.post(url, json=data)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            logging.error(f"Error registering user: {str(e)}")
+            raise
 
     def fetch_and_summarize_news(self, email):
         """Fetch and summarize news based on user preferences."""
@@ -19,15 +23,19 @@ class GatewayAccessor:
         ai_url = "http://localhost:3500/v1.0/invoke/ai-service/method/api/generate_summary"
         email_url = "http://localhost:3500/v1.0/invoke/email-service/method/api/send_email"
 
-        news_response = requests.post(news_url, json={"email": email})
-        news_response.raise_for_status()
-        articles = news_response.json().get("news_summary")
-        
-        ai_response = requests.post(ai_url, json={"articles": articles})
-        ai_response.raise_for_status()
-        summary = ai_response.json().get("summary")
-        
-        email_response = requests.post(email_url, json={"email": email, "summary": summary})
-        email_response.raise_for_status()
-        
-        return {"status": "News summary sent"}
+        try:
+            news_response = requests.post(news_url, json={"email": email})
+            news_response.raise_for_status()
+            articles = news_response.json().get("news_summary")
+            
+            ai_response = requests.post(ai_url, json={"articles": articles})
+            ai_response.raise_for_status()
+            summary = ai_response.json().get("summary")
+            
+            email_response = requests.post(email_url, json={"email": email, "summary": summary})
+            email_response.raise_for_status()
+            
+            return {"status": "News summary sent"}
+        except requests.RequestException as e:
+            logging.error(f"Error in fetch_and_summarize_news: {str(e)}")
+            raise

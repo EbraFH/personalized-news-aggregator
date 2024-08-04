@@ -9,32 +9,20 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Preferences from "./components/Preferences";
 import NewsSummaries from "./components/NewsSummaries";
-
-function PrivateRoute({ component: Component, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        localStorage.getItem("token") ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-  );
-}
+// Import the global styles
+import "./styles/GlobalStyles.css";
 
 function App() {
   return (
     <Router>
       <div>
         <Switch>
-          <Route exact path="/" component={Login} />
+          {/* Redirect root to login page */}
+          <Route exact path="/" render={() => <Redirect to="/login" />} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <PrivateRoute path="/preferences" component={Preferences} />
-          <PrivateRoute path="/news" component={NewsSummaries} />
+          <Route path="/preferences" component={Preferences} />
+          <Route path="/news" component={NewsSummaries} />
         </Switch>
       </div>
     </Router>

@@ -1,36 +1,26 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import "../styles/styles.css";
+import { savePreferences } from "../services/api";
+import "./styles/Preferences.css";  // Import component-specific styles
+
 
 function Preferences() {
+  // State for preferences input and error message
   const [preferences, setPreferences] = useState("");
   const [error, setError] = useState("");
   const history = useHistory();
 
+  // Handle save preferences form submission
   const handleSavePreferences = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
       const email = localStorage.getItem("email");
-      const response = await fetch("http://localhost:5000/api/preferences", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          email,
-          preferences: preferences.split(",").map((p) => p.trim()),
-        }),
-      });
-      if (response.ok) {
-        history.push("/news");
-      } else {
-        const errorData = await response.json();
-        setError(errorData.error || "Failed to save preferences");
-      }
+      await savePreferences(email, preferences.split(","), token);
+      // Redirect to news page after saving preferences
+      history.push("/news");
     } catch (error) {
-      setError("An error occurred. Please try again.");
+      setError("Failed to save preferences. Please try again.");
     }
   };
 

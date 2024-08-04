@@ -1,42 +1,46 @@
 import React, { useState, useEffect } from "react";
-import "../styles/styles.css";
+import { fetchNewsSummaries } from "../services/api";
+import "./styles/NewsSummaries.css";  // Import component-specific styles
 
 function NewsSummaries() {
+  // State for news summaries and error message
   const [summaries, setSummaries] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  // Fetch news summaries on component mount
   useEffect(() => {
-    const fetchSummaries = async () => {
+    const getSummaries = async () => {
       try {
+        setLoading(true);
         const email = localStorage.getItem("email");
-        const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:5000/api/news", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ email }),
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setSummaries(data.news_summary);
-        } else {
-          const errorData = await response.json();
-          setError(errorData.error || "Failed to fetch news summaries");
-        }
+        const data = await fetchNewsSummaries(email);
+        setSummaries(data.news_summary);
       } catch (error) {
-        setError("An error occurred. Please try again.");
+        setError("Failed to fetch news summaries. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchSummaries();
+    getSummaries();
   }, []);
 
   return (
     <div className="container">
       <h2>News Summaries</h2>
       {error ? (
+        <p className="error">{error}</p>
+      ) : (
+        <ul>
+          {summaries.map((summary, index) => (
+            <li key={index}>{summary}</li>
+          ))}
+        </ul>
+      )}
+      {loading ? (
+        <p>Loading news summaries...</p>
+      ) : error ? (
         <p className="error">{error}</p>
       ) : (
         <ul>

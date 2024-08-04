@@ -18,9 +18,9 @@ def register():
         gateway_manager = GatewayManager()
         response = gateway_manager.register_user(email, preferences)
         
-        return jsonify(response), 200
+        return jsonify(response), 201
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": f"Registration failed: {str(e)}"}), 500
 
 @bp.route('/api/news', methods=['POST'])
 @jwt_required()
@@ -36,6 +36,6 @@ def fetch_news():
         gateway_manager = GatewayManager()
         response = gateway_manager.fetch_and_summarize_news(email)
         
-        return jsonify(response), 202
+        return jsonify(response), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": f"Failed to fetch news: {str(e)}"}), 500

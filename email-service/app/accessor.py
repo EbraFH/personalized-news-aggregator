@@ -29,6 +29,9 @@ class EmailAccessor:
                 server.login(sender_email, sender_password)
                 server.sendmail(sender_email, email, msg.as_string())
             logging.info(f"Email sent successfully to {email}")
+        except smtplib.SMTPException as e:
+            logging.error(f"SMTP error occurred: {str(e)}")
+            raise
         except Exception as e:
-            logging.error(f"Failed to send email: {str(e)}")
+            logging.error(f"Unexpected error occurred while sending email: {str(e)}")
             raise

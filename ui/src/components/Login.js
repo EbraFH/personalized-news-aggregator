@@ -1,31 +1,28 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import "../styles/styles.css";
+import { loginUser } from "../services/api";
+import "./styles/Login.css";  // Import component-specific styles
+import { Link } from "react-router-dom";
+
 
 function Login() {
+  // State for email input and error message
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const history = useHistory();
 
+  // Handle login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("token", data.access_token);
-        localStorage.setItem("email", email);
-        history.push("/preferences");
-      } else {
-        const errorData = await response.json();
-        setError(errorData.error || "Login failed");
-      }
+      const data = await loginUser(email);
+      // Store token and email in localStorage
+      localStorage.setItem("token", data.access_token);
+      localStorage.setItem("email", email);
+      // Redirect to preferences page
+      history.push("/preferences");
     } catch (error) {
-      setError("An error occurred. Please try again.");
+      setError("Login failed. Please try again.");
     }
   };
 
@@ -42,6 +39,9 @@ function Login() {
         />
         <button type="submit">Login</button>
       </form>
+      <p>
+        Don't have an account? <Link to="/register">Register here</Link>
+      </p>
       {error && <p className="error">{error}</p>}
     </div>
   );

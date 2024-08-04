@@ -14,8 +14,11 @@ def send_email():
         if not email:
             return jsonify({"error": "Email is required"}), 400
         
+        if not summary:
+            return jsonify({"error": "Summary is required"}), 400
+        
         EmailManager.send_email(email, summary)
         
         return jsonify({"message": "Email sent successfully"}), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
