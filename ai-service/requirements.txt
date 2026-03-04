@@ -4,4 +4,4 @@ python-dotenv==1.0.0
 Flask-CORS==3.0.10
 transformers==4.27.1
 torch==2.8.0
-semantic-kernel==0.4.5.dev0
+semantic-kernel==1.39.4
